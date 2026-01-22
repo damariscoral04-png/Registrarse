@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Delicious_Clous - Registro</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #C2A9F2 0%, #F3A0D2 35%, #9DB6F0 70%, #B3EEEB 100%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.3);
+      max-width: 520px;
+      width: 100%;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+    }
+
+    h1 {
+      text-align: center;
+      color: #4b0082;
+      margin-bottom: 5px;
+    }
+
+    p {
+      text-align: center;
+      color: #5e35b1;
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+      color: #4b0082;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      border-radius: 8px;
+      border: 1px solid rgba(0,0,0,0.1);
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.6);
+      color: #000;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
+      background: #ff4081;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #f50057;
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Delicious_Clous</h1>
+  <p>Regístrate para recibir el menú del día</p>
+
+  <label>Nombre</label>
+  <input id="nombre" type="text" placeholder="Tu nombre">
+
+  <label>Correo</label>
+  <input id="email" type="email" placeholder="ejemplo@correo.com">
+
+  <button onclick="registrar()">Registrarme</button>
+</div>
+
+<script>
+  function registrar() {
+    const nombre = document.getElementById("nombre").value;
+    const email = document.getElementById("email").value;
+
+    if (!nombre || !email) {
+      alert("Por favor completa tu nombre y correo");
+      return;
+    }
+
+    const webhookUrl = "https://damarisc.app.n8n.cloud/webhook/06a06f9d-5e72-4873-a4e6-fd1bb80f61ba";
+
+    fetch(webhookUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nombre, email })
+    })
+    .then(response => response.json())
+    .then(data => {
+      alert("Registrado correctamente 😊");
+    })
+    .catch(error => {
+      alert("Error al registrar: " + error);
+    });
+  }
+</script>
+
+</body>
+</html>
