@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Delicious_Clous - Registro</title>
   <style>
     body {
@@ -105,25 +106,40 @@
       return;
     }
 
+    // URL de producción de tu n8n
     const webhookUrl = "https://damarisc.app.n8n.cloud/webhook/06a06f9d-5e72-4873-a4e6-fd1bb80f61ba";
 
     fetch(webhookUrl, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ nombre, email })
+      headers: { 
+        "Content-Type": "application/json" 
+      },
+      mode: "cors", // Asegura que use CORS correctamente
+      body: JSON.stringify({ 
+        nombre: nombre, 
+        email: email 
+      })
     })
-    .then(response => response.json())
-    .then(data => {
-      alert("Registrado correctamente ");
+    .then(response => {
+      if (response.ok) {
+        alert("¡Registrado correctamente!");
+        // Limpiar campos después del éxito
+        document.getElementById("nombre").value = "";
+        document.getElementById("email").value = "";
+      } else {
+        alert("El servidor respondió con un error (Código: " + response.status + ")");
+      }
     })
     .catch(error => {
-      alert("Error al registrar: " + error);
+      console.error("Error completo:", error);
+      alert("Error de conexión. Verifica que el Workflow esté en 'Publish' en n8n.");
     });
   }
 </script>
 
 </body>
 </html>
+
 
 
 
